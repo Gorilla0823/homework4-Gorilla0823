@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="musicbox-style.css"/>
     <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
-    <script src="./lib/dancer.min.js"></script>
+    <script src="./lib/dancer.js"></script>
     <script src="./lib/fetch.js"></script>
     <script src="audio-player.js" defer></script>
 
@@ -28,7 +28,7 @@
       <fieldset>
         <form>
           <h2>1. Choose a song:</h2>
-          <select id="song-selector"></select>
+          <select id="song-selector" ></select>
 
           <h2>2. Choose a theme:</h2>
           <input type="text" id="query-input" placeholder="Enter a word or phrase" />
@@ -40,6 +40,11 @@
     </div>
 
     <!-- TODO(you): Add the HTML necessary to complete the assignment! -->
+
+    <div id="music" class="inactive">
+      <div id="gifs"></div>
+      <div id="control"><img src="images/pause.png" id="playbutton"></div>
+      </div>
 
   </body>
 </html>

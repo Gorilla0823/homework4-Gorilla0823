@@ -1,3 +1,47 @@
 /*
 TODO(you): Write any additional styles you need here.
 */
+option {
+	background-color: white;
+}
+#music {
+	width: 100vw;
+	height:100vh;
+	margin:0;
+	display: flex;
+    flex-direction:column;
+}
+#gifs {
+	height:calc(100% - 70px);
+	position: relative;
+}
+#control{
+	height:70px;
+	width:100%;
+	display:flex;
+    align-items: center;
+    justify-content: center;
+}
+#control img{
+	height:60px;
+	width:60px;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+.gif{
+	height:100%;
+	width:100%;
+	position: absolute;
+	background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.loading{
+	color:#e2e2e2;
+	font-size:2em;
+	font-style:italic;
+	position: absolute;
+  	top:50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+}
