@@ -13,6 +13,7 @@ class GifDisplay {
     	this.display(content);
     	this.count=0;
       this.flag=false;
+      this.cycle=false;
   	}
 
    	display(content){
@@ -38,9 +39,11 @@ class GifDisplay {
   		if(this.count===this.gif.length){
         this.count=1;
         this.flag=true;
+        this.cycle=true;
       }
-      else if(this.count!==this.gif.length-1){
-        for(var i=this.count;i<=this.count+1;i++){
+      else if(this.count!==this.gif.length-1&&this.cycle===false){
+        var init=(this.count===0)?this.count:this.count+1;
+        for(var i=init;i<=this.count+1;i++){
           const background=document.createElement('div');
           var image=new Image;
           image.src=this.gif[i];
@@ -58,7 +61,7 @@ class GifDisplay {
   			    gif[this.count].classList.remove('inactive');
   			    gif[this.count].classList.add('foreground');
   				  gif[this.count].style.zIndex=2;
-          //console.log('First access : foreground '+this.count+' backgroundImage '+ gif[this.count].style.backgroundImage );
+            //console.log('First access : foreground '+this.count+' backgroundImage '+ gif[this.count].style.backgroundImage );
   			}
         var back=this.count+1;
   			if(gif[back].classList.contains('inactive')){
