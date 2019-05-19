@@ -24,10 +24,10 @@ class App {
   		console.log('App : error');
   		//console.log(flag);
   		this.errorflag=flag;
- 		if(!document.querySelector('.loading').classList.contains('inactive')){
+ 		  if(!document.querySelector('.loading').classList.contains('inactive')){
  			document.querySelector('.loading').classList.add('inactive');
  			document.body.removeChild(document.querySelector('.loading'));
- 		}
+ 		  }
   		document.querySelector('#music').classList.add('inactive');
     	document.querySelector('#menu').classList.remove('inactive');
     	document.querySelector('#error').classList.remove('inactive');

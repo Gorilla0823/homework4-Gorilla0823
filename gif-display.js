@@ -12,6 +12,7 @@ class GifDisplay {
     	this.gif=[];
     	this.display(content);
     	this.count=0;
+      this.flag=false;
   	}
 
    	display(content){
@@ -33,131 +34,64 @@ class GifDisplay {
   		});
   	}
 
-  	changeGIF(){
-  		this.count++;
-  		//for the first access , set foreground and background
-  		if(this.count==1){
-  			for(var i=0;i<this.gif.length;i++){
-  				const background=document.createElement('div');
-  				var image=new Image;
-  				image.src=this.gif[i];
-  				image.addEventListener('load',function(){
-  					console.log('loaded');
-  				})
-  				background.style.backgroundImage= 'url('+image.src+')';
-  				background.setAttribute("class","inactive gif");
-  				document.querySelector("#gifs").appendChild(background);
-  			}
-  			var random=Math.floor(Math.random()*this.gif.length);
+  	changeGIF(){  		
+  		if(this.count===this.gif.length){
+        this.count=1;
+        this.flag=true;
+      }
+      else if(this.count!==this.gif.length-1){
+        for(var i=this.count;i<=this.count+1;i++){
+          const background=document.createElement('div');
+          var image=new Image;
+          image.src=this.gif[i];
+          image.addEventListener('load',function(){
+            console.log('loaded');
+          })
+          background.style.backgroundImage= 'url('+this.gif[i]+')';
+          background.setAttribute("class","inactive gif");
+          document.querySelector("#gifs").appendChild(background);
+        }
+      }
+  		if(!this.count){
   			const gif=document.querySelectorAll('.gif');
-  			if(gif[random].classList.contains('inactive')){
-  				gif[random].classList.remove('inactive');
-  				gif[random].classList.add('foreground');
-  				gif[random].style.zIndex=2;
+  			if(gif[this.count].classList.contains('inactive')){
+  			    gif[this.count].classList.remove('inactive');
+  			    gif[this.count].classList.add('foreground');
+  				  gif[this.count].style.zIndex=2;
+          //console.log('First access : foreground '+this.count+' backgroundImage '+ gif[this.count].style.backgroundImage );
   			}
-  			//console.log(gif[random].style.backgroundImage);
-  			random=( random === (this.gif.length-1) )?random-1:random+1;
-  			if(gif[random].classList.contains('inactive')){
-  					gif[random].classList.remove('inactive');
-  					gif[random].classList.add('background');
-  					gif[random].style.zIndex=1;
+        var back=this.count+1;
+  			if(gif[back].classList.contains('inactive')){
+  					gif[back].classList.remove('inactive');
+  					gif[back].classList.add('background');
+  					gif[back].style.zIndex=1;
+            //console.log('First access : background '+back+' backgroundImage '+ gif[back].style.backgroundImage );
   			}
-  			//console.log(gif[random].style.backgroundImage);
   		}
-  		//for all the next access, delete foreground ,replace it,and find a new background
   		else{
-  			var index;
   			const gif=document.querySelectorAll('.gif');
-  			for(var i=0;i<this.gif.length;i++){
-  				if(gif[i].classList.contains('foreground')){
-  					gif[i].style.zIndex=-1;
-  					gif[i].classList.remove('foreground');
-  					gif[i].classList.add('inactive');
-  				}
-  				else if(gif[i].classList.contains('background')){
-  					gif[i].style.zIndex=2;
-  					gif[i].classList.add('foreground');
-  					gif[i].classList.remove('background');
-  					index=i;
-  					//console.log(gif[i].style.backgroundImage);
-  				}
-  			}
-  			var random=Math.floor(Math.random()*this.gif.length);
-  			random=( random === (this.gif.length-1) )?random-1:random+1;
-  			if(random === index)
-  				random=(index === (this.gif.length-1) )?index-1:index+1;
-  			if(gif[random].classList.contains('inactive')){
-  				gif[random].classList.remove('inactive');
-  				gif[random].classList.add('background');
-  				gif[random].style.zIndex=1;
-  				//console.log(gif[random].style.backgroundImage);
-  			}
+        var eliminate;
+        if(this.flag===true){
+          eliminate=this.gif.length-1;
+          this.flag=false;
+        }
+        else 
+          eliminate=this.count-1;
+  			gif[eliminate].style.zIndex=-1;
+  			gif[eliminate].classList.remove('foreground');
+  			gif[eliminate].classList.add('inactive');
+        //console.log('(Eliminate)foreground '+eliminate+' backgroundImage '+ gif[eliminate].style.backgroundImage );
+  			gif[this.count].style.zIndex=2;
+  			gif[this.count].classList.add('foreground');
+  			gif[this.count].classList.remove('background');
+  			//console.log('New: Foreground '+this.count+' backgroundImage '+ gif[this.count].style.backgroundImage );
+        var newback=(this.count===this.gif.length-1)? 1 : this.count+1;
+  			gif[newback].classList.remove('inactive');
+  			gif[newback].classList.add('background');
+  			gif[newback].style.zIndex=1;
+        //console.log('New : Background '+newback+' backgroundImage '+ gif[newback].style.backgroundImage );
   		}
+      this.count++;
   	}
 }		
-  			/*var index;
-  			for(var i=0;i<this.gif.length;i++){
-  				const gif=document.querySelectorAll('.gif');
-  				if(!gif[i].classList.contains('inactive')){
-  					gif[i].classList.add('inactive');
-  					index=i;
-  					break;
-  				}
-  			}*/
-  			//var random=Math.floor(Math.random()*this.gif.length);
-  			//console.log(random);
-  			
-  			//console.log(random);
-  			/*if(random === index)
-  				random=(index === (this.gif.length-1) )?index-1:index+1;*/
-  			//const gif=document.querySelectorAll('.gif');
-  				
-  		/*if(this.count===1){
-  			for(var i=0;i<this.gif.length;i++){
-  				const background=document.createElement('div');
-  				background.style.backgroundImage= 'url('+this.gif[i]+')';
-  				background.setAttribute("class","inactive gif");
-  				document.querySelector("#gifs").appendChild(background);
-  			}
-  			var random=Math.floor(Math.random()*this.gif.length);
-  			const gif=document.querySelectorAll('.gif');
-  			if(gif[random].classList.contains('inactive'))
-  				gif[random].classList.remove('inactive');
-  		}
-  		else{
-  			var index;
-  			for(var i=0;i<this.gif.length;i++){
-  				const gif=document.querySelectorAll('.gif');
-  				if(!gif[i].classList.contains('inactive')){
-  					gif[i].classList.add('inactive');
-  					index=i;
-  					break;
-  				}
-  			}
-  			var random=Math.floor(Math.random()*this.gif.length);
-  			//console.log(random);
-  			random=( random === (this.gif.length-1) )?random-1:random+1;
-  			if(random === index)
-  				random=(index === (this.gif.length-1) )?index-1:index+1;
-  			const gif=document.querySelectorAll('.gif');
-  				if(gif[random].classList.contains('inactive'))
-  					gif[random].classList.remove('inactive');
-  			//console.log(random);
-  		}*/
-
-// TODO(you): Add methods as necessary.
-/*var random=Math.floor(Math.random()*this.gif.length);
-  	const gifs=document.querySelector("#gifs");
-  	if(gifs.classList.contains('inactive'))
-  		gifs.classList.remove('inactive');
-  	gifs.style.backgroundImage= 'url('+this.gif[random]+')';
-  	background.setAttribute("class","gif");
-  	console.log('current '+ this.gif[random]);
-  	const background=document.createElement('div');
-  	var random2=(random===this.gif.length)?random-1:random+1;
-    console.log('next '+ this.gif[random2]);
-  	background.style.backgroundImage= 'url('+this.gif[random2]+')';
-  	background.setAttribute("class","inactive");
-  	background.setAttribute("class","gif");
-  	const gifs2=document.querySelector("#music");
-  	gifs2.appendChild(background);*/
+  		
